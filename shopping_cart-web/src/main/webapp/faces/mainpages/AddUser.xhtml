@@ -1,0 +1,81 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewmeta" content="width=device-width"/>
+    </h:head>
+    <h:body>
+        <h:form id="loginForm">
+
+            <p:autoUpdate/>
+            <p:messages id="messages"  />
+            <p:panel id="panelGridId"   >
+                           
+                    <h2>Sign Up</h2>
+                    <p:panelGrid id="signUp" >    
+
+                        <p:row>
+                            <p:column>         
+                                <p:selectOneRadio id="typeRB" value = "#{loginBB.user.isDoctor}" > 
+                                    <f:selectItem itemValue = "0" itemLabel = "Patient" />
+                                    <f:selectItem itemValue = "1" itemLabel = "Doctor" /> 
+                                    <p:ajax event="change" update="signUp" listener="#{loginBB.findAllSpecializationList()}"/> 
+                                </p:selectOneRadio>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="Full Name "  />
+                            </p:column>
+                            <p:column >
+                                <p:inputText  value="#{loginBB.patient.name}" rendered="#{loginBB.user.isDoctor ne loginBB.doctorStr}"/>
+                                <p:inputText  value="#{loginBB.doctor.name}" rendered="#{loginBB.user.isDoctor eq loginBB.doctorStr}" />
+                            </p:column>
+                        </p:row>
+                        <p:row rendered="#{loginBB.user.isDoctor eq loginBB.doctorStr}">
+                            <p:column>
+                                <p:outputLabel value="Specialization " for="specialization" />
+                            </p:column>
+                            <p:column >
+                                <p:selectOneMenu id="specialization" required="true"  converter="omnifaces.SelectItemsConverter"
+                                                 filter="true" value="#{loginBB.doctor.specializationId}" effect="fold" editable="true">
+                                    <f:selectItem itemLabel="Select One" itemValue="" />
+                                    <f:selectItems value="#{loginBB.specializationList}" var="specializationId" 
+                                                   itemValue="#{specializationId}" itemLabel="#{specializationId.name}"/>
+                                </p:selectOneMenu>
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:outputLabel value="User Name "  />
+                            </p:column>
+                            <p:column >
+                                <h:panelGroup>
+                                    <p:inputText label="usernameIT" value="#{loginBB.user.userName}" />
+                                </h:panelGroup>
+                            </p:column>
+                        </p:row>
+                        <p:row> 
+                            <p:column>
+                                <p:outputLabel for="password" value="Password "/>
+                            </p:column>
+                            <p:column>
+                                <p:password  id="password" value="#{loginBB.user.password}" />
+                            </p:column>
+                        </p:row>
+                        <p:row>
+                            <p:column>
+                                <p:commandButton value="Sign Up" action="#{loginBB.save()}" ajax="false" />
+                            </p:column>
+                        </p:row>
+                    </p:panelGrid>
+            </p:panel>  
+
+        </h:form>
+    </h:body>
+</html>
+

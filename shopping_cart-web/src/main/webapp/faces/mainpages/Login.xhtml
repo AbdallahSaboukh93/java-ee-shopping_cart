@@ -1,0 +1,49 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      xmlns:p="http://primefaces.org/ui">
+    <h:head>
+        <title>Login</title>
+        <meta name="viewmeta" content="width=device-width"/>
+    </h:head>
+    <h:body>
+        <h:form id="loginForm">
+
+            <p:autoUpdate/>
+            <p:messages id="messages"  />
+            <p:panel id="panelGridId" header=" Shopping Cart"  >
+                <f:validateBean disabled="true">
+                    <h2>Sign In</h2>
+                    <p:panelGrid  columns="2" id="signIn"  >   
+                        <p:outputLabel value="User Name "/>
+                        <p:inputText label="username" value="#{loginBB.user.userName}" />
+
+                        <p:outputLabel value="Password "/>
+                        <p:password value="#{loginBB.user.password}" />
+
+                        <p:commandButton value="login" action="#{loginBB.login()}" partialSubmit="true" process="@this" ajax="false"  />
+                        <!--                              <p:commandButton value="Sign Up" type="button" onclick="PF('eventDialog').show();" /> -->
+                    </p:panelGrid>
+
+                  
+                    <p:panelGrid id="signUp" columns="2" rendered="false">
+                      <h2>Create New Account </h2>
+                        <p:outputLabel value="User Name "  />
+                        <p:inputText label="usernameIT" value="#{loginBB.newUser.userName}" />
+
+                        <p:outputLabel for="password" value="Password "/>
+                        <p:password  id="password" value="#{loginBB.newUser.password}" />
+
+                        <p:commandButton value="Sign Up" action="#{loginBB.save()}" ajax="false" />
+
+                    </p:panelGrid>
+
+                </f:validateBean>
+            </p:panel>  
+
+        </h:form>
+    </h:body>
+</html>
+

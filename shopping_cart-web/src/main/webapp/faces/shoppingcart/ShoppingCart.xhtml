@@ -1,0 +1,68 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:p="http://primefaces.org/ui"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    <h:head>
+        <title> Products List</title>
+    </h:head>
+    <h:body>
+        <style type="text/css">
+            .value {
+                width: 1000px;
+            }
+
+            /*demo*/
+            .ui-dataview-list .ui-dataview-row {
+                border-bottom: 1px solid #A8A8A8;
+                padding: 25px 10px;
+                /* with the exported variables from Nova and Luna Themes*/
+            }
+
+            .logo {
+                width: 5%;
+            }
+            .detail {
+                width: 85%;
+                padding-left: 25px;
+            }
+        </style>
+
+        <h:form id="form">
+            <p:panel >
+                <p:commandButton value="Back" style="height:50px; width: 80px ;" action="#{shoppingCartBB.back()}" partialSubmit="true" 
+                                 icon="fs fa-backward"  update=":form"  ajax="false"  >
+                </p:commandButton > 
+            </p:panel>
+
+            <p:dataView var="shoppingCartProducts" value="#{shoppingCartBB.shoppingCartProductsList}"
+                        gridIcon="pi pi-th-large" listIcon="pi pi-bars">
+              
+                <p:dataViewListItem>
+                    <h:panelGrid columns="3" style="width:100%" columnClasses="logo,detail">
+                        <p:graphicImage value="#{shoppingCartBB.getImage(shoppingCartProducts.productId)}"   width="200" height="200" stream="false"/> 
+                        <p:outputPanel>
+                            <h:panelGrid columns="2" cellpadding="5">
+                                <h:outputText value="Name:" />
+                                <h:outputText value="#{shoppingCartProducts.productId.name}" style="font-weight: bold"/>
+
+                                <h:outputText value="Price:" />
+                                <h:outputText value="#{shoppingCartProducts.productId.price}" style="font-weight: bold"/>
+
+                                <p:commandButton value="Delete Product From Shopping Cart" action="#{shoppingCartBB.deleteProductFromShoppingCart()}" partialSubmit="true" 
+                                                 update=":form"  ajax="false"  >
+                                    <f:setPropertyActionListener value="#{shoppingCartProducts}" target="#{shoppingCartBB.selectedShoppingCartProducts}" />
+                                </p:commandButton>
+
+                            </h:panelGrid>
+                        </p:outputPanel>
+
+                    </h:panelGrid>
+                </p:dataViewListItem>
+            </p:dataView>
+
+        </h:form>
+    </h:body>
+</html>
+
